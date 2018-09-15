@@ -1,0 +1,19 @@
+<section>
+  <article>
+    <ul>
+      <li *ngFor="let m of errorMessages">{{m}}</li>
+    </ul>
+    <h1>Nome:</h1>
+    <input type="hidden" [value]="pessoa.id"/>
+    <input type="text" [(ngModel)]="pessoa.nome"/>
+    <input type="text" [(ngModel)]="pessoa.idade"/>
+    <p>Dados alterados: {{pessoa?.nome}} - {{pessoa?.idade}} ano(s)</p>
+    
+    <button (click)="pesquisarPessoaByNome()">Pesquisar</button>
+    <button (click)="limparPessoa()">Limpar</button>
+    <button (click)="inserirPessoa()">Inserir</button>
+  </article>
+
+
+</section>
+
