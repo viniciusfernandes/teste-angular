@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Pessoa } from '../pessoa/pessoa.model';
 import { PessoaService } from '../pessoa/pessoa.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -10,7 +10,7 @@ import { AbstractComponent } from '../app.abstract.component';
   templateUrl: './pessoa-listagem.component.html',
   styleUrls: ['./pessoa-listagem.component.css']
 })
-export class PessoaListagemComponent extends AbstractComponent implements OnInit {
+export class PessoaListagemComponent extends AbstractComponent implements OnInit, OnDestroy {
   listaPessoa:Pessoa[]=[];
   idadeAsc:boolean=false;
   nomeAsc:boolean=false;
@@ -20,6 +20,7 @@ export class PessoaListagemComponent extends AbstractComponent implements OnInit
    }
 
   ngOnInit() {
+    console.info('onInit listagem error message: '+this.errorMessages);
     let params = this.redirectParams();
     if(params !==null || params!==undefined){
       console.info('param nome:'+params.nome);

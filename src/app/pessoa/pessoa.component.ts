@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Pessoa } from './pessoa.model';
 import { PessoaService } from './pessoa.service';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -10,16 +10,20 @@ import { AbstractComponent } from '../app.abstract.component';
   templateUrl: './pessoa.component.html',
   styleUrls: ['./pessoa.component.css']
 })
-export class PessoaComponent extends AbstractComponent implements OnInit {
+export class PessoaComponent extends AbstractComponent   {
 
   pessoa:Pessoa=new Pessoa();
-  errorMessages:string[]=[];
+ 
   
   constructor( private pessoaService:PessoaService, route:ActivatedRoute, router:Router) {
     super(route, router);
    }
+
+ 
  
   ngOnInit() {
+    console.info('onInit pessoa error message: '+this.errorMessages);
+
     let params = this.redirectParams();
     if(params !==null || params!==undefined){
       if(params.idPessoa === null || params.idPessoa === undefined){
@@ -30,6 +34,9 @@ export class PessoaComponent extends AbstractComponent implements OnInit {
       }
     }
   }
+
+  
+ 
 
   pesquisarPessoaByNome(){
     let nomePessoa = this.pessoa.nome;

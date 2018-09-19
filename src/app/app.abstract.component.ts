@@ -1,12 +1,24 @@
 import { Observable } from "rxjs";
 import { Router, ActivatedRoute, Params, NavigationExtras } from "@angular/router";
-import { ResponseContent } from "./app.response.content";
+import { OnDestroy, OnInit } from "@angular/core";
 
-export class AbstractComponent {
-    protected errorMessages:string[]=[];
+export class AbstractComponent implements OnInit, OnDestroy{
+    protected errorMessages:string[]=['nada de erro'];
     
     protected constructor(private route:ActivatedRoute, private router:Router){}
     
+    ngOnInit(){
+        
+        
+    }
+
+    ngOnDestroy(){
+        this.errorMessages=null;
+        this.route=null;
+        this.router=null;
+    }
+
+
     protected redirectParams():any{
         let redirParam :any = null;
         this.route.queryParams.subscribe(params => redirParam=params);
