@@ -9,20 +9,13 @@ import { IfStmt } from "@angular/compiler";
 @Injectable()
 export class GenericService {
     private  API_HOST = '//localhost:8080';
-    private  AUTENTICATION_HOST = '//localhost:8081';
-    private  REQ_OPTIONS =
-        new RequestOptions({headers: new Headers([{'Content-Type': 'application/json'}])});
-    private token:string;
-    
+    private  REQ_OPTIONS:RequestOptions;
+  
    protected constructor(private http:Http, private router:Router, private route:ActivatedRoute){
-       
+       let h =new Headers();
+       h.append('Content-Type', 'application/json');
+       this.REQ_OPTIONS = new RequestOptions({headers: h});
    }
-
-    protected isTokenOk(email:string, senha:string):boolean{
-        let authResp= this.httpPost('/auth', {'email':email, 'senha':senha}).subscribe(resp=> authResp=resp);
-        this.token = authResp.data.token;
-        return this.token!==null &&  this.token!== '';
-    }
 
     protected httpGet(url:string):Observable<any>{
         return this.http.get(`${this.API_HOST}${url}`).pipe(map(resp=>resp.json()));

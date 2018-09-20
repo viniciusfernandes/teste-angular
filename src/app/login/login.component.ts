@@ -3,6 +3,7 @@ import { Login } from './login.model';
 import { AbstractComponent } from '../app.abstract.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoginService } from './login.service';
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,10 @@ import { LoginService } from './login.service';
 export class LoginComponent extends AbstractComponent {
   private login:Login;
   private erros:string;
-  constructor(private loginService:LoginService, route:ActivatedRoute, router:Router){
+  private loginService:LoginService ; 
+  constructor(http:Http,  route:ActivatedRoute, router:Router){
     super(route, router);
+this.loginService =new LoginService(http,route,router);
 
   }
  onInit(){
@@ -26,11 +29,7 @@ export class LoginComponent extends AbstractComponent {
  }
 
  autenticar(){
-   if(this.loginService.logedIn(this.login)){
-    this.redirect({path:['/pessoa']});
-   }else {
-    this.erros='Usuário/Senha inválidos';
-   }
+  this.loginService.gerarToken(this.login);
  }
 
 }
