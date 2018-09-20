@@ -10,53 +10,57 @@ import { AbstractComponent } from '../app.abstract.component';
   templateUrl: './pessoa.component.html',
   styleUrls: ['./pessoa.component.css']
 })
-export class PessoaComponent extends AbstractComponent   {
+export class PessoaComponent extends AbstractComponent {
 
-  pessoa:Pessoa=new Pessoa();
- 
-  
-  constructor( private pessoaService:PessoaService, route:ActivatedRoute, router:Router) {
+  pessoa: Pessoa = new Pessoa();
+
+
+  constructor(private pessoaService: PessoaService, route: ActivatedRoute, router: Router) {
     super(route, router);
-   }
+  }
 
- 
- 
-  ngOnInit() {
-    console.info('onInit pessoa error message: '+this.errorMessages);
+
+
+  onInit() {
+    console.info('onInit pessoa error message: ' + this.errorMessages);
 
     let params = this.redirectParams();
-    if(params !==null || params!==undefined){
-      if(params.idPessoa === null || params.idPessoa === undefined){
+    if (params !== null || params !== undefined) {
+      if (params.idPessoa === null || params.idPessoa === undefined) {
         this.pessoa = new Pessoa();
-      } else{
-        let observable =this.pessoaService.pesquisarPessoaById(params.idPessoa);
-         this.redirect({observable:observable, ok:(data)=> this.pessoa=data});
+      } else {
+        let observable = this.pessoaService.pesquisarPessoaById(params.idPessoa);
+        this.redirect({ observable: observable, ok: (data) => this.pessoa = data });
       }
     }
   }
 
-  
- 
+  onDestroy(){
+    this.pessoa=null;
+  }
 
-  pesquisarPessoaByNome(){
+
+
+
+  pesquisarPessoaByNome() {
     let nomePessoa = this.pessoa.nome;
-   
-    if( nomePessoa===undefined){
+
+    if (nomePessoa === undefined) {
       nomePessoa = null;
     }
-    console.info('nome:'+nomePessoa+' pessoa: '+this.pessoa);
-    this.redirect({path:['/pessoa/listagem'], params:{ queryParams: { nome: nomePessoa } }});
-   }
+    console.info('nome:' + nomePessoa + ' pessoa: ' + this.pessoa);
+    this.redirect({ path: ['/pessoa/listagem'], params: { queryParams: { nome: nomePessoa } } });
+  }
 
-  limparPessoa(){
+  limparPessoa() {
     this.pessoa = new Pessoa();
   }
 
-  inserirPessoa(){
-    if(this.pessoa == null|| this.pessoa == undefined){
+  inserirPessoa() {
+    if (this.pessoa == null || this.pessoa == undefined) {
       return;
     }
-    let obsr:Observable<any>  = this.pessoaService.inserirPessoa(this.pessoa);
-    this.redirect({observable:obsr, path:['/pessoa/listagem'], pathFail:['/pessoa']});
+    let obsr: Observable<any> = this.pessoaService.inserirPessoa(this.pessoa);
+    this.redirect({ observable: obsr, path: ['/pessoa/listagem'], pathFail: ['/pessoa'] });
   }
 }

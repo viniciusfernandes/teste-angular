@@ -11,7 +11,7 @@ import { AbstractComponent } from '../app.abstract.component';
   styleUrls: ['./pessoa-listagem.component.css']
 })
 export class PessoaListagemComponent extends AbstractComponent implements OnInit, OnDestroy {
-  listaPessoa:Pessoa[]=[];
+  listaPessoa:Pessoa[];
   idadeAsc:boolean=false;
   nomeAsc:boolean=false;
   
@@ -19,14 +19,21 @@ export class PessoaListagemComponent extends AbstractComponent implements OnInit
     super(route, router);
    }
 
-  ngOnInit() {
+  onInit() {
     console.info('onInit listagem error message: '+this.errorMessages);
     let params = this.redirectParams();
     if(params !==null || params!==undefined){
       console.info('param nome:'+params.nome);
       let observable= this.pesquisarPessoaByNome(params.nome);
       this.redirect({observable:observable, ok:data => this.listaPessoa=data});
+    }else {
+      this.listaPessoa=[];
     }
+  }
+  onDestroy(){
+    this.listaPessoa=null;
+    this.idadeAsc=null;
+    this.nomeAsc=null;
   }
 
   pesquisarPessoa(idPessoa:string){

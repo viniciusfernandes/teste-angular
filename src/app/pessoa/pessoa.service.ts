@@ -3,19 +3,18 @@ import { Observable } from "rxjs";
 import { Pessoa } from "./pessoa.model";
 import { Injectable, ErrorHandler } from "@angular/core";
 import { map, concat } from "rxjs/operators";
-import { REST_API } from "../app.rest.api";
-import { AbstractService } from "../app.abstract.service";
+import { GenericService } from "../app.generic.service";
 import { Router, ActivatedRoute } from "@angular/router";
 
 
 @Injectable()
-export class PessoaService extends AbstractService{
+export class PessoaService extends GenericService{
     constructor( http:Http, router:Router, route:ActivatedRoute){
         super(http, router, route);
     }
 
     pesquisarPessoaByNome(nome:string):Observable<any>{
-        return this.httpGet(`/pessoa/${nome}/listagem`);;
+        return this.httpGet(`/pessoa/${nome}/listagem`);
     }
 
     pesquisarPessoaById(id:string): Observable<any>{     

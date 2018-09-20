@@ -9,7 +9,8 @@ import { PessoaComponent } from './pessoa/pessoa.component';
 import { ROTAS } from './app.rotas';
 import { PessoaService } from './pessoa/pessoa.service';
 import { PessoaListagemComponent } from './pessoa-listagem/pessoa-listagem.component';
-import { AbstractService } from './app.abstract.service';
+import { GenericService } from './app.generic.service';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -17,7 +18,8 @@ import { AbstractService } from './app.abstract.service';
   declarations: [
     AppComponent,
     PessoaComponent,
-    PessoaListagemComponent
+    PessoaListagemComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
