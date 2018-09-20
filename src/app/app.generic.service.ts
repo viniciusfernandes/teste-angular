@@ -25,7 +25,7 @@ export class GenericService {
         if(host===undefined){
             host=this.API_HOST;
         }
-        return this.handleResponse( this.http.post(`${host}${url}`, 
+        return this.toJson( this.http.post(`${host}${url}`, 
                                     JSON.stringify(json), this.REQ_OPTIONS ));
     }
 
@@ -33,7 +33,7 @@ export class GenericService {
         this.router.navigate(url, params);
     }
 
-    private handleResponse(observable:Observable<any>):Observable<any>{
+    private toJson(observable:Observable<any>):Observable<any>{
         return observable.pipe(map(resp =>  resp.json()));
     }
 }
