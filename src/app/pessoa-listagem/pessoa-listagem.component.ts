@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Pessoa } from '../pessoa/pessoa.model';
 import { PessoaService } from '../pessoa/pessoa.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AbstractComponent } from '../app.abstract.component';
+import { AuthenticationService } from '../app.authentication.service';
 
 @Component({
   selector: 'app-pessoa-listagem',
@@ -15,8 +15,8 @@ export class PessoaListagemComponent extends AbstractComponent implements OnInit
   idadeAsc:boolean=false;
   nomeAsc:boolean=false;
   
-  constructor( private pessoaService:PessoaService, route:ActivatedRoute, router:Router) {
-    super(route, router);
+  constructor( private pessoaService:PessoaService, route:ActivatedRoute, router:Router, authService:AuthenticationService) {
+    super(route, router, authService);
    }
 
   onInit() {

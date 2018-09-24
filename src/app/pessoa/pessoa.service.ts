@@ -5,11 +5,13 @@ import { Injectable, ErrorHandler } from "@angular/core";
 import { map, concat } from "rxjs/operators";
 import { GenericService } from "../app.generic.service";
 import { Router, ActivatedRoute } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
 
 
 @Injectable()
 export class PessoaService extends GenericService{
-    constructor( http:Http, router:Router, route:ActivatedRoute){
+    
+    constructor( http:HttpClient, router:Router, route:ActivatedRoute){
         super(http, router, route);
     }
 

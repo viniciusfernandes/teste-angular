@@ -2,13 +2,25 @@ import { Observable } from "rxjs";
 import { Router, ActivatedRoute, Params, NavigationExtras } from "@angular/router";
 import { OnDestroy, OnInit } from "@angular/core";
 
+import { ROLE_ADMIN, ROLE_USER } from "./app.user.roles";
+import { AuthenticationService } from "./app.authentication.service";
+
+
 export abstract class AbstractComponent implements OnInit, OnDestroy{
     protected errorMessages:string[]=[];
+private authenticationRequired:boolean =true;
+
+    protected constructor(private route:ActivatedRoute, private router:Router, public authService:AuthenticationService){
+    }
     
-    protected constructor(private route:ActivatedRoute, private router:Router){}
-    
+   
     ngOnInit(){
-        this.onInit();
+        console.info('auth: '+this.authenticationRequired+' token: '+this.authService.hasToken());
+        if(this.authenticationRequired && !this.authService.hasToken()){
+            this.redirect({'path':['/login']});
+        }else{
+            this.onInit();
+        }
     }
 
     ngOnDestroy(){
@@ -62,5 +74,21 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
         } else if(path !== undefined && path !== null){
             this.router.navigate(path, params);
         }
+    }
+
+    protected isAdmin():boolean{
+        return this.authService.hasRole(ROLE_ADMIN);
+    }
+
+    
+    protected isUser():boolean{
+        return this.authService.hasRole(ROLE_USER);
+    }
+
+    protected setAuthenticationRequired(){
+        this.authenticationRequired=true;
+    }
+    protected setAuthenticationNotRequired(){
+        this.authenticationRequired=false;
     }
 }

@@ -9,9 +9,9 @@
     <input type="text" [(ngModel)]="pessoa.idade"/>
     <p>Dados alterados: {{pessoa?.nome}} - {{pessoa?.idade}} ano(s)</p>
     
-    <button (click)="pesquisarPessoaByNome()">Pesquisar</button>
+    <button *ngIf="pesquisaPermitida" (click)="pesquisarPessoaByNome()">Pesquisar</button>
     <button (click)="limparPessoa()">Limpar</button>
-    <button (click)="inserirPessoa()">Inserir</button>
+    <button *ngIf="inclusaoPermitida" (click)="inserirPessoa()">Inserir</button>
   </article>
 
 
