@@ -40,11 +40,17 @@ export class AuthenticationService extends GenericService {
     }
 
      hasRole(role:string):boolean {
+
         return  this.auth && this.auth.roles.indexOf(role)>=0;
     }
 
-    hasToken():boolean{
+    isAuthenticated():boolean{
+        this.verifytokeExpired();
         return  this.auth && this.auth.token;
+    }
+
+    private verifytokeExpired(){
+       
     }
 
     getToken():string{

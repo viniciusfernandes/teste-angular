@@ -15,6 +15,10 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
     
    
     ngOnInit(){
+        if(!this.authService.isAuthenticated()){
+            this.redirect({path:['/login']});
+            return;
+        }
         this.onInit();
     }
 

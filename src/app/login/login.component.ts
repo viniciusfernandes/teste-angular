@@ -31,11 +31,12 @@ export class LoginComponent extends AbstractComponent {
    this.erros=null;
  }
 
- autenticar(){
+ authenticate(){
   this.authService.generateToken(this.login, 
       (resp)=> this.redirect({path:['/pessoa']}), 
       (error)=>this.erros='Usuário/Senha inválidos!'
     );
  }
+
 
 }

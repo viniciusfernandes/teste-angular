@@ -22,13 +22,12 @@ export  class GenericService {
         return this.http.get(`${this.API_HOST}${url}`);
     }
 
-    protected httpPost(url:string, json:any, host?:string):Observable<any>{
+    protected httpPost(url:string, json?:any, host?:string):Observable<any>{
         if(host===undefined){
             host=this.API_HOST;
         }
         console.info('header: '+this.header.get('Content-Type'));
-        return this.http.post(`${host}${url}`, JSON.stringify(json), 
-            {headers:new HttpHeaders({"Content-Type":"application/json; charset=utf-8"})});
+        return this.http.post(`${host}${url}`, json !== undefined ?JSON.stringify(json): undefined, {headers:this.header});
     }
 
     protected redirectTo(url:string[], params?:NavigationExtras){
