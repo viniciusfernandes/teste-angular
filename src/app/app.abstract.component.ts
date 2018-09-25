@@ -8,19 +8,14 @@ import { AuthenticationService } from "./app.authentication.service";
 
 export abstract class AbstractComponent implements OnInit, OnDestroy{
     protected errorMessages:string[]=[];
-private authenticationRequired:boolean =true;
-
+    private authenticationRequired:boolean =true;
+    private init:()=>void;
     protected constructor(private route:ActivatedRoute, private router:Router, public authService:AuthenticationService){
     }
     
    
     ngOnInit(){
-        console.info('auth: '+this.authenticationRequired+' token: '+this.authService.hasToken());
-        if(this.authenticationRequired && !this.authService.hasToken()){
-            this.redirect({'path':['/login']});
-        }else{
-            this.onInit();
-        }
+        this.onInit();
     }
 
     ngOnDestroy(){

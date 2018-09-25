@@ -21,6 +21,9 @@ export class LoginComponent extends AbstractComponent {
  onInit(){
    this.login  = new Login();
    this.setAuthenticationNotRequired();
+
+   this.login.email='admin@email.com';
+   this.login.senha='123456';
  }
 
  onDestroy(){

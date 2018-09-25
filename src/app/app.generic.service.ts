@@ -27,15 +27,11 @@ export  class GenericService {
             host=this.API_HOST;
         }
         console.info('header: '+this.header.get('Content-Type'));
-        return this.toJson(this.http.post(`${host}${url}`, JSON.stringify(json), 
-            {headers:new HttpHeaders({"Content-Type":"application/json; charset=utf-8"})}));
+        return this.http.post(`${host}${url}`, JSON.stringify(json), 
+            {headers:new HttpHeaders({"Content-Type":"application/json; charset=utf-8"})});
     }
 
     protected redirectTo(url:string[], params?:NavigationExtras){
         this.router.navigate(url, params);
-    }
-
-    private toJson(observable:Observable<any>):Observable<any>{
-        return observable.pipe(map(resp =>  resp.json()));
     }
 }

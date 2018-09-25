@@ -34,7 +34,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
   providers: [ 
     PessoaService, 
     AuthenticationService,
-    //{provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true}
      
   ],
   bootstrap: [AppComponent]

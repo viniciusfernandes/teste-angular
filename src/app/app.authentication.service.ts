@@ -22,14 +22,14 @@ export class AuthenticationService extends GenericService {
         this.httpPost('/auth', {"email":login.email, "senha":login.senha}, this.AUTENTICATION_HOST)
                     .subscribe(
                         resp=>{
-                            console.info('generate token status: '+resp.status);
+                            console.info('generate token status: '+(JSON.stringify(resp)));
                             this.storage.set('auth', resp.data);
                             if(onSucess!==undefined){
                                 onSucess(resp);
                             }
                         }, 
                         error=>{
-                            console.info('generate token error status: '+error);
+                            console.info('generate token error status: '+JSON.stringify(error));
                             this.storage.remove('auth');
                             if(onError!==undefined){
                                 onError(error);    
@@ -40,12 +40,11 @@ export class AuthenticationService extends GenericService {
     }
 
      hasRole(role:string):boolean {
-        console.info('roles: '+this.auth.roles);
-       return this.auth.roles.indexOf(role)>=0;
+        return  this.auth && this.auth.roles.indexOf(role)>=0;
     }
 
     hasToken():boolean{
-        return this.auth.token;
+        return  this.auth && this.auth.token;
     }
 
     getToken():string{
