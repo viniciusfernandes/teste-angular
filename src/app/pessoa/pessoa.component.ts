@@ -27,7 +27,7 @@ private pesquisaPermitida:boolean=false;
 
   onInit() {
     this.inclusaoPermitida = this.isAdmin();
-    this.pesquisaPermitida = this.isUser();
+    this.pesquisaPermitida = this.isAdmin() || this.isUser();
 
     console.info('admin: '+this.inclusaoPermitida+' user: '+this.pesquisaPermitida);
 
@@ -44,6 +44,8 @@ private pesquisaPermitida:boolean=false;
 
   onDestroy(){
     this.pessoa=null;
+    this.inclusaoPermitida=false;
+    this.pesquisaPermitida=false;
   }
 
 

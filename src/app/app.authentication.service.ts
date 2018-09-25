@@ -23,13 +23,16 @@ export class AuthenticationService extends GenericService {
                     .subscribe(
                         resp=>{
                             console.info('generate token status: '+(JSON.stringify(resp)));
-                            this.storage.set('auth', resp.data);
+                            this.auth = resp.data;
+                            this.storage.set('auth', this.auth);
+
                             if(onSucess!==undefined){
                                 onSucess(resp);
                             }
                         }, 
                         error=>{
                             console.info('generate token error status: '+JSON.stringify(error));
+                            this.auth = null;
                             this.storage.remove('auth');
                             if(onError!==undefined){
                                 onError(error);    
@@ -51,9 +54,11 @@ export class AuthenticationService extends GenericService {
 
     private verifytokeExpired(){
         this.httpGet('/auth/token/expirado', this.AUTENTICATION_HOST).subscribe(resp=>{
-            console.info('expirado: '+resp.data );
-            let ok = new Boolean(resp.data);
-           if(ok === true){
+         
+            let ok:Boolean = new Boolean(resp.data);
+            console.info('expirado: '+(JSON.stringify(resp )) +' ok: '+ok);
+           if(ok.valueOf()){
+               console.info('removendo auth pois token expirado');
             this.auth=null;
             this.storage.remove('auth');
            }
