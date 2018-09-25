@@ -18,12 +18,15 @@ export  class GenericService {
     }
 
 
-    protected httpGet(url:string):Observable<any>{
-        return this.http.get(`${this.API_HOST}${url}`);
+    protected httpGet(url:string, host?:string):Observable<any>{
+        if(host===undefined || host===null){
+            host=this.API_HOST;
+        }
+        return this.http.get(`${host}${url}`, {headers:this.header});
     }
 
     protected httpPost(url:string, json?:any, host?:string):Observable<any>{
-        if(host===undefined){
+        if(host===undefined || host===null){
             host=this.API_HOST;
         }
         console.info('header: '+this.header.get('Content-Type'));

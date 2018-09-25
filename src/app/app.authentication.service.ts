@@ -50,7 +50,14 @@ export class AuthenticationService extends GenericService {
     }
 
     private verifytokeExpired(){
-       
+        this.httpGet('/auth/token/expirado', this.AUTENTICATION_HOST).subscribe(resp=>{
+            console.info('expirado: '+resp.data );
+            let ok = new Boolean(resp.data);
+           if(ok === true){
+            this.auth=null;
+            this.storage.remove('auth');
+           }
+        });
     }
 
     getToken():string{

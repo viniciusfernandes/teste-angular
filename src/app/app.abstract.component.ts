@@ -15,7 +15,7 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
     
    
     ngOnInit(){
-        if(!this.authService.isAuthenticated()){
+        if(this.authenticationRequired && !this.authService.isAuthenticated()){
             this.redirect({path:['/login']});
             return;
         }
@@ -71,6 +71,7 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
                 }
             );
         } else if(path !== undefined && path !== null){
+            console.info('redirecionando: '+path);
             this.router.navigate(path, params);
         }
     }

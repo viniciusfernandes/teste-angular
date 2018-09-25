@@ -16,12 +16,11 @@ export class LoginComponent extends AbstractComponent {
   
   constructor(http:Http,  route:ActivatedRoute, router:Router, authService:AuthenticationService){
     super(route, router, authService);
+    this.setAuthenticationNotRequired();
   }
 
  onInit(){
    this.login  = new Login();
-   this.setAuthenticationNotRequired();
-
    this.login.email='admin@email.com';
    this.login.senha='123456';
  }

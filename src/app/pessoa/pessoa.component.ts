@@ -29,8 +29,7 @@ private pesquisaPermitida:boolean=false;
     this.inclusaoPermitida = this.isAdmin();
     this.pesquisaPermitida = this.isUser();
 
-    this.inclusaoPermitida = true;
-    this.pesquisaPermitida = true;
+    console.info('admin: '+this.inclusaoPermitida+' user: '+this.pesquisaPermitida);
 
     let params = this.redirectParams();
     if (params !== null || params !== undefined) {
