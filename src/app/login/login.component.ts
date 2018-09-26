@@ -19,13 +19,13 @@ export class LoginComponent extends AbstractComponent {
     this.setAuthenticationNotRequired();
   }
 
- onInit(){
+ onInit = ()=>{
    this.login  = new Login();
    this.login.email='admin@email.com';
    this.login.senha='123456';
  }
 
- onDestroy(){
+ onDestroy=() => {
    this.login=null;
    this.erros=null;
  }
@@ -33,7 +33,7 @@ export class LoginComponent extends AbstractComponent {
  authenticate(){
   this.authService.generateToken(this.login, 
       (resp)=> this.redirect({path:['/pessoa']}), 
-      (error)=>this.erros='Usuário/Senha inválidos!'
+      (error)=>this.erros='Dados inválidos!'
     );
  }
 

@@ -10,7 +10,7 @@ import { AuthenticationService } from '../app.authentication.service';
   templateUrl: './pessoa-listagem.component.html',
   styleUrls: ['./pessoa-listagem.component.css']
 })
-export class PessoaListagemComponent extends AbstractComponent implements OnInit, OnDestroy {
+export class PessoaListagemComponent extends AbstractComponent  {
   listaPessoa:Pessoa[];
   idadeAsc:boolean=false;
   nomeAsc:boolean=false;
@@ -19,7 +19,7 @@ export class PessoaListagemComponent extends AbstractComponent implements OnInit
     super(route, router, authService);
    }
 
-  onInit() {
+  onInit =()=>{
     console.info('onInit listagem error message: '+this.errorMessages);
     let params = this.redirectParams();
     if(params !==null || params!==undefined){
@@ -30,7 +30,7 @@ export class PessoaListagemComponent extends AbstractComponent implements OnInit
       this.listaPessoa=[];
     }
   }
-  onDestroy(){
+  onDestroy=()=>{
     this.listaPessoa=null;
     this.idadeAsc=null;
     this.nomeAsc=null;

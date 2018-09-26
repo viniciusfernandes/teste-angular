@@ -9,7 +9,8 @@ import { AuthenticationService } from "./app.authentication.service";
 export abstract class AbstractComponent implements OnInit, OnDestroy{
     protected errorMessages:string[]=[];
     private authenticationRequired:boolean =true;
-    private init:()=>void;
+    protected onInit:()=>void;
+    protected onDestroy:()=>void;
     protected constructor(private route:ActivatedRoute, private router:Router, public authService:AuthenticationService){
     }
     
@@ -29,9 +30,6 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
         this.onDestroy();
     }
     
-    protected  abstract onInit();
-    protected  abstract onDestroy();
-
 
     protected redirectParams():any{
         let redirParam :any = null;

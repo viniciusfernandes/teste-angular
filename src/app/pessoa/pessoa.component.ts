@@ -25,7 +25,7 @@ private pesquisaPermitida:boolean=false;
 
 
 
-  onInit() {
+  onInit = () => {
     this.inclusaoPermitida = this.isAdmin();
     this.pesquisaPermitida = this.isAdmin() || this.isUser();
 
@@ -42,7 +42,7 @@ private pesquisaPermitida:boolean=false;
     }
   }
 
-  onDestroy(){
+  onDestroy = ()=>{
     this.pessoa=null;
     this.inclusaoPermitida=false;
     this.pesquisaPermitida=false;
