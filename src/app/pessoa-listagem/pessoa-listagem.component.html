@@ -1,21 +1,30 @@
-<input type="button" (click)="inserirPessoa()" value="Inserir Pessoa"/>
-<fieldset>
-  <legend>Lista de Pessoas</legend>
-  <table >
-    <thead>
-    <tr>
-       
-      <th (click)="ordernarNome()" >Nome</th>
-      <th (click)="ordernarIdade()">Idade</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let p of listaPessoa">
-      <td><a (click)="pesquisarPessoa(p.id)">{{p.nome}}</a></td>
-      <td style="text-align: right">{{p.idade}}</td>
-    </tr>
-    
+
+  <div class="row">
+     <div class="form-group">
+        
+            <h4>Lista de Pessoas:</h4>
+            <table class="table-striped table-hover">
+              <thead>
+              <tr>
+                 
+                <th (click)="ordernarNome()" >Nome</th>
+                <th (click)="ordernarIdade()">Idade</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let p of listaPessoa">
+                <td><a (click)="pesquisarPessoa(p.id)">{{p.nome}}</a></td>
+                <td style="text-align: right">{{p.idade}}</td>
+              </tr>
+              
+            
+              </tbody>
+            </table>
+      
+    </div>
+    <div class="form-group ml-5">
+        <input type="button" (click)="inserirPessoa()" value="Cadastro de Pessoa" class="btn btn-primary"/>
   
-    </tbody>
-  </table>
-</fieldset>
+    </div>
+  
+  </div>
