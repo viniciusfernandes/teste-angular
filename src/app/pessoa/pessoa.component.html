@@ -1,19 +1,28 @@
-<section>
-  <article>
     <ul>
       <li *ngFor="let m of errorMessages">{{m}}</li>
     </ul>
-    <h1>Nome:</h1>
-    <input type="hidden" [value]="pessoa.id"/>
-    <input type="text" [(ngModel)]="pessoa.nome"/>
-    <input type="text" [(ngModel)]="pessoa.idade"/>
-    <p>Dados alterados: {{pessoa?.nome}} - {{pessoa?.idade}} ano(s)</p>
     
-    <button *ngIf="pesquisaPermitida" (click)="pesquisarPessoaByNome()">Pesquisar</button>
-    <button (click)="limparPessoa()">Limpar</button>
-    <button *ngIf="inclusaoPermitida" (click)="inserirPessoa()">Inserir</button>
-  </article>
 
+<div class="row">
+    <div class="col-md form-group">
+      <input type="hidden" [value]="pessoa.id"/>
+      <label for="">Nome:</label>
+      <input type="text" [(ngModel)]="pessoa.nome" class="form-control"/>
+    </div>
+    <div class="col-md form-group ">
+        <label for="">Idade:</label>
+        <input type="hidden" [value]="pessoa.id"/>
+        <input type="text" [(ngModel)]="pessoa.idade" class="form-control"/>
+    </div>
+    
+</div>
+<div class="row">
+    <div class="col-md"></div>
+    <div class="col-md">
+        <button *ngIf="inclusaoPermitida" (click)="inserirPessoa()" class="btn btn-primary ">Inserir</button>
+      <button *ngIf="pesquisaPermitida" (click)="pesquisarPessoaByNome()" class="btn btn-primary ml-2">Pesquisar</button>
+      <button (click)="limparPessoa()" class="btn btn-primary ml-2">Limpar</button>
+      
+  </div>
 
-</section>
 
