@@ -49,15 +49,13 @@ export class AuthenticationService extends GenericService {
 
     isAuthenticated():boolean{
         this.verifytokeExpired();
-        return  this.auth && this.auth.token;
+        return  this.auth && this.auth.token && this.auth.token.trim().length >0;
     }
 
     private verifytokeExpired(){
         this.httpGet('/auth/token/expirado', this.AUTENTICATION_HOST).subscribe(resp=>{
-         
-            let ok:Boolean = new Boolean(resp.data);
-            console.info('expirado: '+(JSON.stringify(resp )) +' ok: '+ok);
-           if(ok.valueOf()){
+            console.info('token expirado: '+resp.data);
+           if(resp.data){
                console.info('removendo auth pois token expirado');
             this.auth=null;
             this.storage.remove('auth');

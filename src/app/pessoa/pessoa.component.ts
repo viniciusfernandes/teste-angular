@@ -14,9 +14,9 @@ import { AuthenticationService } from '../app.authentication.service';
 })
 export class PessoaComponent extends AbstractComponent {
 
-  private pessoa: Pessoa = new Pessoa();
-private inclusaoPermitida:boolean=false;
-private pesquisaPermitida:boolean=false;
+  pessoa: Pessoa = new Pessoa();
+  inclusaoPermitida:boolean=false;
+ pesquisaPermitida:boolean=false;
 
   constructor(private pessoaService: PessoaService, route: ActivatedRoute, router: Router, authService:AuthenticationService) {
     super(route, router, authService);

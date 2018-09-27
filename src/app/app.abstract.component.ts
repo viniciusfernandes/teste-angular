@@ -7,7 +7,7 @@ import { AuthenticationService } from "./app.authentication.service";
 
 
 export abstract class AbstractComponent implements OnInit, OnDestroy{
-    protected errorMessages:string[]=[];
+    errorMessages:string[]=[];
     private authenticationRequired:boolean =true;
     protected onInit:()=>void;
     protected onDestroy:()=>void;
@@ -16,6 +16,7 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
     
    
     ngOnInit(){
+        console.info('onInit abstract...')
         if(this.authenticationRequired && !this.authService.isAuthenticated()){
             this.redirect({path:['/login']});
             return;
@@ -38,6 +39,13 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
     }
 
     protected redirect(redirection){
+        let isAuth:boolean = this.authService.isAuthenticated();
+        console.info('verificando o redirecionamento. eh exigiada a autenticacao: '+this.authenticationRequired +'. Autenticado: '+isAuth);
+        if(this.authenticationRequired && !isAuth){
+            this.router.navigate(['/login']);
+            return;
+        }
+        
         let observable:Observable<any> = redirection.observable;
         let ok:any = redirection.ok;
         let path:string[] = redirection.path;
@@ -45,6 +53,8 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
         let pathFail:string[] = redirection.pathFail;
         let params:NavigationExtras = redirection.params;
         
+        
+
         if(observable!==undefined){
             observable.subscribe(
                 data=>{

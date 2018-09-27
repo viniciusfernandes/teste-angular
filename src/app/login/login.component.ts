@@ -11,8 +11,8 @@ import { AuthenticationService } from '../app.authentication.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent extends AbstractComponent {
-  private login:Login=new Login();
-  private erros:string;
+   login:Login=new Login();
+   erros:string;
   
   constructor(http:Http,  route:ActivatedRoute, router:Router, authService:AuthenticationService){
     super(route, router, authService);

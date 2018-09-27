@@ -20,10 +20,9 @@ export class PessoaListagemComponent extends AbstractComponent  {
    }
 
   onInit =()=>{
-    console.info('onInit listagem error message: '+this.errorMessages);
     let params = this.redirectParams();
     if(params !==null || params!==undefined){
-      console.info('param nome:'+params.nome);
+      console.info('listanto pessoas com nome:'+params.nome);
       let observable= this.pesquisarPessoaByNome(params.nome);
       this.redirect({observable:observable, ok:data => this.listaPessoa=data});
     }else {
