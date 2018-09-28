@@ -17,17 +17,19 @@ export class LoginComponent extends AbstractComponent {
   constructor(http:Http,  route:ActivatedRoute, router:Router, authService:AuthenticationService){
     super(route, router, authService);
     this.setAuthenticationNotRequired();
+
+    this.login  = new Login();
+    this.login.email='admin@email.com';
+    this.login.senha='123456';
   }
 
  onInit = ()=>{
-   this.login  = new Login();
-   this.login.email='admin@email.com';
-   this.login.senha='123456';
+  
  }
 
  onDestroy=() => {
-   this.login=null;
-   this.erros=null;
+  this.login=null;
+  this.erros=null;
  }
 
  authenticate(){

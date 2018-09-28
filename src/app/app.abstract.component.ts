@@ -17,11 +17,9 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
    
     ngOnInit(){
         console.info('onInit abstract...')
-        if(this.authenticationRequired && !this.authService.isAuthenticated()){
-            this.redirect({path:['/login']});
-            return;
+        if(this.authenticationRequired){
+            this.authService.isAuthenticated(()=>this.onInit(), ()=> this.doRedirect({path:['/login']}));
         }
-        this.onInit();
     }
 
     ngOnDestroy(){
@@ -39,12 +37,10 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
     }
 
     protected redirect(redirection){
-        let isAuth:boolean = this.authService.isAuthenticated();
-        console.info('verificando o redirecionamento. eh exigiada a autenticacao: '+this.authenticationRequired +'. Autenticado: '+isAuth);
-        if(this.authenticationRequired && !isAuth){
-            this.router.navigate(['/login']);
-            return;
-        }
+        this.authService.isAuthenticated(()=>this.doRedirect(redirection), ()=> this.doRedirect({path:['/login']}));
+    }
+
+private doRedirect(redirection){
         
         let observable:Observable<any> = redirection.observable;
         let ok:any = redirection.ok;
@@ -53,12 +49,11 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
         let pathFail:string[] = redirection.pathFail;
         let params:NavigationExtras = redirection.params;
         
-        
-
         if(observable!==undefined){
             observable.subscribe(
                 data=>{
                     if(path !== undefined && path !== null){
+                        console.info('navegando: '+path);
                         this.router.navigate(path);   
                     }
                     if(ok!==undefined){
@@ -82,7 +77,8 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
             console.info('redirecionando: '+path);
             this.router.navigate(path, params);
         }
-    }
+    
+}
 
     protected isAdmin():boolean{
         return this.authService.hasRole(ROLE_ADMIN);

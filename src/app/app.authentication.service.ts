@@ -47,25 +47,24 @@ export class AuthenticationService extends GenericService {
         return  this.auth && this.auth.roles.indexOf(role)>=0;
     }
 
-    isAuthenticated():boolean{
-        this.verifytokeExpired();
-        return  this.auth && this.auth.token && this.auth.token.trim().length >0;
-    }
 
-    private verifytokeExpired(){
-        this.httpGet('/auth/token/expirado', this.AUTENTICATION_HOST).subscribe(resp=>{
-            console.info('token expirado: '+resp.data);
-           if(resp.data){
-               console.info('removendo auth pois token expirado');
-            this.auth=null;
-            this.storage.remove('auth');
-           }
-        });
-    }
+     isAuthenticated(ok?:()=>void, fail?:()=>void ){
+        console.info('verificando a autenticacao:')        
+        this.httpGet('/auth/token/expirado', this.AUTENTICATION_HOST).subscribe(
+            resp=>{
+                console.info('token valido: '+(!resp.data));
+                ok();
+            },
+            error=>{
+                console.info('token expirado: ');
+                fail();
+                this.auth=null;
+                this.storage.remove('auth');
+            }
+        );
+     }
 
     getToken():string{
         return this.auth && this.auth.token? this.auth.token: '';
     }
-
-
 }
