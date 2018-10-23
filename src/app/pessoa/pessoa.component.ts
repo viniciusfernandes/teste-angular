@@ -19,8 +19,7 @@ export class PessoaComponent extends AbstractComponent {
  pesquisaPermitida:boolean=false;
 
   constructor(private pessoaService: PessoaService, route: ActivatedRoute, router: Router, authService:AuthenticationService) {
-    super(route, router, authService);
-    this.doUnsubscribe(pessoaService);
+    super(route, router, authService, pessoaService);
   }
 
 
@@ -47,9 +46,6 @@ export class PessoaComponent extends AbstractComponent {
     this.inclusaoPermitida=false;
     this.pesquisaPermitida=false;
   }
-
-
-
 
   pesquisarPessoaByNome() {
     let nomePessoa = this.pessoa.nome;

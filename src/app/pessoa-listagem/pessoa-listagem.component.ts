@@ -16,8 +16,7 @@ export class PessoaListagemComponent extends AbstractComponent  {
   nomeAsc:boolean=false;
   
   constructor( private pessoaService:PessoaService, route:ActivatedRoute, router:Router, authService:AuthenticationService) {
-    super(route, router, authService);
-    this.doUnsubscribe(pessoaService);
+    super(route, router, authService, pessoaService);
    }
 
   onInit =()=>{
@@ -30,6 +29,7 @@ export class PessoaListagemComponent extends AbstractComponent  {
       this.listaPessoa=[];
     }
   }
+  
   onDestroy=()=>{
     this.listaPessoa=null;
     this.idadeAsc=null;

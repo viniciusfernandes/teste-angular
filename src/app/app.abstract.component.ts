@@ -13,11 +13,15 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
     protected onInit:()=>void;
     protected onDestroy:()=>void;
     private servicesToUnsubscribe:AbstractService[]=[];
-    protected constructor(private route:ActivatedRoute, private router:Router, public authService:AuthenticationService){
-      this.doUnsubscribe(authService);
+    protected constructor(private route:ActivatedRoute, private router:Router, public authService:AuthenticationService, ...services:AbstractService[]){
+        this.servicesToUnsubscribe.push(authService);
+        if(services){
+            services.forEach(service => {
+                this.servicesToUnsubscribe.push(service);
+            });
+        }
     }
-    
-   
+
     ngOnInit(){
         if(this.authenticationRequired){
             this.authService.isAuthenticated(()=>this.onInit(), ()=> this.doRedirect({path:['/login']}));
@@ -32,10 +36,6 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
             service.ngOnDestroy();
         });
         this.onDestroy();
-    }
-
-    protected doUnsubscribe(service:AbstractService){
-        this.servicesToUnsubscribe.push(service);
     }
 
     protected redirectParams():any{
