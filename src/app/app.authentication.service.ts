@@ -1,14 +1,14 @@
 import { Router, ActivatedRoute } from "@angular/router";
 import { Http } from "@angular/http";
 import { Login } from "./login/login.model";
-import { GenericService } from "./app.generic.service";
+import { AbstractService } from "./app.abstract.service";
 import { LOCAL_STORAGE, StorageService } from 'angular-webstorage-service';
 import { Inject,Injectable} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 
 @Injectable()
-export class AuthenticationService extends GenericService {
+export class AuthenticationService extends AbstractService {
     private readonly AUTENTICATION_HOST:string = '//localhost:8081';
     private auth:any;
   
@@ -19,7 +19,7 @@ export class AuthenticationService extends GenericService {
 
 }
     generateToken(login:Login, onSucess?:any, onError?:any){
-        this.httpPost('/auth', {"email":login.email, "senha":login.senha}, this.AUTENTICATION_HOST)
+        this.doPost('/auth', {"email":login.email, "senha":login.senha}, this.AUTENTICATION_HOST)
                     .subscribe(
                         resp=>{
                             console.info('generate token status: '+(JSON.stringify(resp)));
@@ -50,7 +50,7 @@ export class AuthenticationService extends GenericService {
 
      isAuthenticated(ok?:()=>void, fail?:()=>void ){
         console.info('verificando a autenticacao:')        
-        this.httpGet('/auth/token/expirado', this.AUTENTICATION_HOST).subscribe(
+        this.doGet('/auth/token/expirado', this.AUTENTICATION_HOST).subscribe(
             resp=>{
                 console.info('token valido: '+(!resp.data));
                 ok();

@@ -17,6 +17,7 @@ export class PessoaListagemComponent extends AbstractComponent  {
   
   constructor( private pessoaService:PessoaService, route:ActivatedRoute, router:Router, authService:AuthenticationService) {
     super(route, router, authService);
+    this.doUnsubscribe(pessoaService);
    }
 
   onInit =()=>{

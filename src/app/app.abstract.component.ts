@@ -4,6 +4,7 @@ import { OnDestroy, OnInit } from "@angular/core";
 
 import { ROLE_ADMIN, ROLE_USER } from "./app.user.roles";
 import { AuthenticationService } from "./app.authentication.service";
+import { AbstractService } from "./app.abstract.service";
 
 
 export abstract class AbstractComponent implements OnInit, OnDestroy{
@@ -11,12 +12,13 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
     private authenticationRequired:boolean =true;
     protected onInit:()=>void;
     protected onDestroy:()=>void;
+    private servicesToUnsubscribe:AbstractService[]=[];
     protected constructor(private route:ActivatedRoute, private router:Router, public authService:AuthenticationService){
+      this.doUnsubscribe(authService);
     }
     
    
     ngOnInit(){
-        console.info('onInit abstract...')
         if(this.authenticationRequired){
             this.authService.isAuthenticated(()=>this.onInit(), ()=> this.doRedirect({path:['/login']}));
         }
@@ -26,9 +28,15 @@ export abstract class AbstractComponent implements OnInit, OnDestroy{
         this.errorMessages=null;
         this.route=null;
         this.router=null;
+        this.servicesToUnsubscribe.forEach(service => {
+            service.ngOnDestroy();
+        });
         this.onDestroy();
     }
-    
+
+    protected doUnsubscribe(service:AbstractService){
+        this.servicesToUnsubscribe.push(service);
+    }
 
     protected redirectParams():any{
         let redirParam :any = null;
